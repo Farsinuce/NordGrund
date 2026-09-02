@@ -18,14 +18,23 @@ Kept short. File name and format are [PROPOSED].
 - **Meld runs headless** (CLAUDE.md, Commands); the API token is in `data\meld-data\session.json`.
   `tools\meld_pilot.py` is the whole recipe; scale must be set before the origin.
 - **Found, to act on:**
-  1. The fork stamps `level.dat` DataVersion 4189 (1.21.4) whatever `--mc-version` says; chunks
-     are right. The server rewrites it on first load. Small fork patch; add to the §5 shortlist.
+  1. The fork copies a 1.21.4 template `level.dat` (DataVersion 4189, `arnis/src/world_utils.rs`)
+     whatever `--mc-version` says; chunks are right. The server rewrites it on first load. Small
+     fork patch; add to the §5 shortlist.
   2. Region-file bytes are not reproducible (chunk palettes written in varying order); the world
      is. Gate on `tools\world_diff.py`, not file hashes; a palette-sort patch would restore hashes.
   3. Meld logs `[Export] post-merge hook warning: unsupported operand type(s) for /: 'str' and
      'str'` on every merge (export off, harmless). Upstream bug to report or patch.
   4. Biomes: taiga in 36 % of chunks, desert 2.5 %; glowstone in 33 % of chunks (interiors).
      Expected (CLAUDE.md, PRIMER §1); work items 8–9.
+  5. Outside the generated cells the world is the template's superflat grass plane at Y −62: Meld
+     never passes the fork's `--void`, so every cell edge is a ~124-block cliff. One-line Meld
+     setting to add before production, or a world border. Our `server.properties` already has
+     `generate-structures=false`, so no villages appear on the plane.
+  6. With the manual lock at 0 m, every sea-floor sample below 0 m clamps to Y 62; water depth is
+     the fork's own carve (heightmap min Y 59). Walk the shore before ratifying decisions.md I.
+- **Meld driving manual:** `research/meld-driving-manual-2026-09-03.md`, written by a 23-agent
+  verification pass over Meld `5c1353e` (417 claims checked, 2 refuted); its §8 lists 34 traps.
 - **Awaiting the user:** the walk (PRIMER §4); decisions.md F (re-review PRIMER §3) and the new
   [PROPOSED] items I (height profile), J (settings base), K (determinism gate wording).
 - **Next:** work item 2 (the harness: `tools\` is the seed), the `level.dat` patch, then item 3.

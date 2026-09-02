@@ -68,7 +68,9 @@ settled. Close items in place with one line; never renumber. File name and forma
 - I. [PROPOSED 2 Sep 2026] Height profile, used by the pilot: vanilla −64..319, `ground_level` 62,
   elevation lock pinned by hand at 0–180 m, so in-game Y = 62 + metres (sea at Y 62, Møllehøj at
   Y 233) and 126 blocks stay below sea level for survival mining. Meld's default (−56, survey lock)
-  leaves 8. Ratify or change before the first production cell (first merge wins, REFERENCE §10.5).
+  leaves 8. Trade-off: with the lock's floor at 0 m every sea-floor sample below 0 m clamps to Y 62,
+  so bays have only the fork's carved depth. Ratify or change before the first production cell
+  (first merge wins, REFERENCE §10.5).
 - J. [PROPOSED 2 Sep 2026] Settings base for the pilot: Meld's shipped `presets/default.json` (the
   maintainer's tuned 1:1 look: interiors on, all schematic props off, tree sizes big 70 / tall 50)
   with PRIMER §3 on top. Raw Meld project defaults differ (interiors off, every prop on). Say if

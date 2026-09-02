@@ -134,6 +134,7 @@ Expect, do not fix, in the pilot:
 - X/Z are origin-relative, not grid coordinates (§9.4; open, PRIMER §6).
 - Roughly a third of build 9's buildings: OSM is the only footprint source for now (CONSULT §7).
 - Region-file hashes differ between identical runs (palette order); compare with `tools\world_diff.py`.
+- Beyond the generated cells: a flat grass plane at Y −62 and a cliff (Meld never passes `--void`).
 
 ## How this file may grow or be revised
 

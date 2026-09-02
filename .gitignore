@@ -1,0 +1,12 @@
+# Forks: each is its own clone (CLAUDE.md, The workspace)
+/arnis/
+/meld/
+# Regenerables: Meld data/cache, downloads, generated worlds, server runtimes
+/data/
+# Credentials (REFERENCE §17); never committed anywhere
+.env
+# Python / editor noise
+__pycache__/
+.venv/
+*.pyc
+.claude/settings.local.json

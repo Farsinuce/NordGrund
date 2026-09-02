@@ -3,30 +3,34 @@
 Where the work is right now. Rewritten in place at the end of every session, never appended.
 Kept short. File name and format are [PROPOSED].
 
-## 1 Sep 2026
+## 3 Sep 2026 (session of 2–3 Sep)
 
-- **Workspace:** `CLAUDE.md`, `decisions.md`, this file, the three PIVOT files and
-  `NordGrund.code-workspace`. Not a git repo. No forks, no code, no credentials in use.
-- **Next:** PRIMER §5 work item 1, which waits on nobody. Creating our own repos waits on
-  `decisions.md` A.
-  1. Clone `Teddy563/meld` at `5c1353e`.
-  2. Fetch the fork's v3.1.8 release binary (== `78215bd`) and place it beside `meld_launch.py`.
-  3. Apply PRIMER §3 through `project.json` and the local API.
-  4. Generate the pilot tile 6223_574 (central Aarhus) across at least one Meld cell border.
-  5. Walk it against build 9 (PRIMER §4). Ask the user to re-review PRIMER §3 (`decisions.md` F).
-- **PRIMER §3 was re-verified 1 Sep 2026** against Meld `5c1353e`: four defaults were wrong for us
-  (scale, buildings, bake lighting, snow); the section is the runbook.
-- **Machine** (verified 1 Sep 2026; re-run the version commands before relying on any of it):
-  - Python 3.12.9 (Meld needs 3.10+).
-  - Rust stable, installed 1 Sep; open a fresh shell for `cargo`.
-  - Java: the 26.2 server needs Java 25. `java` on PATH is 25.0.4 today, but a JDK 21 is also
-    installed, so launch with `C:\Program Files\Java\jdk-25.0.4\bin\java.exe` by absolute path.
-  - A 26.2 server runtime is at `d:\ai\KlodsDanmark\testserver` (`server.jar`, `libraries/`);
-    boot flags in the old repo's `tools/mcserver.py` (`-Xmx2G -Xms1G`, four `-D*.encoding=UTF-8`
-    flags, `nogui`).
-- **Walk logistics:** point a copied server runtime at a COPY of build 9, never at
-  `testserver\denmark-test` (loading dirties chunks, REFERENCE §12).
+- **Workspace:** this folder is the public repo `Farsinuce/NordGrund`. Forks cloned and pinned:
+  `arnis\` = `Farsinuce/arnis` at `78215bd` (v3.1.8, remotes `upstream` = Teddy563, `louis-e`),
+  `meld\` = `Farsinuce/meld` at `5c1353e` (v1.9.8). Pinned binary `meld\arnis.exe` (release asset,
+  sha256 `09d326dc…5544`). Meld venv `data\venv-meld`. Tools in `tools\`, numbers in `research\`.
+- **Work item 1 is generated, not yet walked.** Project `aarhus-pilot`: four 2048-block cells whose
+  borders cross at the centre of tile 6223_574 (x = 0 and z = 0 in game). 78 s to generate, 288 MB,
+  65,536 chunks at DataVersion 4903, read-back PASS, block-identical across three generations of
+  one cell, boots clean on 26.2. All numbers: `research/pilot-run-2026-09-02.md`.
+- **Walk:** `data\server-pilot` (port 25565, world `meld-pilot`, a copy) and `data\server-build9`
+  (port 25566, `denmark-test`, a hash-verified copy of build 9). Launch lines in CLAUDE.md.
+- **Meld runs headless** (CLAUDE.md, Commands); the API token is in `data\meld-data\session.json`.
+  `tools\meld_pilot.py` is the whole recipe; scale must be set before the origin.
+- **Found, to act on:**
+  1. The fork stamps `level.dat` DataVersion 4189 (1.21.4) whatever `--mc-version` says; chunks
+     are right. The server rewrites it on first load. Small fork patch; add to the §5 shortlist.
+  2. Region-file bytes are not reproducible (chunk palettes written in varying order); the world
+     is. Gate on `tools\world_diff.py`, not file hashes; a palette-sort patch would restore hashes.
+  3. Meld logs `[Export] post-merge hook warning: unsupported operand type(s) for /: 'str' and
+     'str'` on every merge (export off, harmless). Upstream bug to report or patch.
+  4. Biomes: taiga in 36 % of chunks, desert 2.5 %; glowstone in 33 % of chunks (interiors).
+     Expected (CLAUDE.md, PRIMER §1); work items 8–9.
+- **Awaiting the user:** the walk (PRIMER §4); decisions.md F (re-review PRIMER §3) and the new
+  [PROPOSED] items I (height profile), J (settings base), K (determinism gate wording).
+- **Next:** work item 2 (the harness: `tools\` is the seed), the `level.dat` patch, then item 3.
+- **Machine** (verified 2 Sep 2026): Python 3.12.9; Rust stable at `%USERPROFILE%\.cargo\bin`
+  (not on PATH in the Bash tool); JDK 25.0.4 at `C:\Program Files\Java\jdk-25.0.4`; 16 threads,
+  32 GB, D: 194 GB free. Meld's `/api/recommend`: 4 workers × 4 threads.
 - **Time-critical:** DAWA closes 1 Oct 2026 (`decisions.md` G).
-- **Pins** (🟡 from the message of old-repo commit 09cbf36): PRIMER and REFERENCE were verified at
-  Teddy563/arnis `78215bd` and Teddy563/meld `5c1353e` (both still HEAD, last pushed 27 Aug 2026)
-  and louis-e/arnis `c7b5f19` (upstream moved past it on 31 Aug 2026 and again on 1 Sep).
+- **Pins:** as above; `louis-e/arnis` main was `e431474` when fetched on 2 Sep 2026.

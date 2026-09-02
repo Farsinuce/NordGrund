@@ -72,15 +72,16 @@ pinned commit.
 
 ## The workspace [PROPOSED, the user's call]
 
-Today the root holds this file, `decisions.md`, `STATE.md`, the three PIVOT files and the user's
-`NordGrund.code-workspace`. Nothing else below exists. Creating the repos waits on decisions.md A.
+Regenerated from the real tree on 3 Sep 2026. The root is the public repo `Farsinuce/NordGrund`
+(PRIMER §2's enrichment repo, holding the docs); forks and data are clones and regenerables, gitignored.
 
 ```
-d:\ai\NordGrund\   workspace root; would become PRIMER §2's enrichment repo, holding the docs too
-  arnis\  meld\    our forks, each its own clone, gitignored here. Meld's launcher can cargo-build
-                   a sibling arnis\ but only after a release download fails; never rely on it, drop
-                   the pinned binary next to meld_launch.py instead (PRIMER §3)
-  data\            gitignored regenerables: MELD_DATA_DIR and MELD_CACHE_DIR, downloads, worlds
+d:\ai\NordGrund\   this file, decisions.md, STATE.md, the PIVOT files, tools\, research\
+  arnis\  meld\    our forks: Farsinuce/arnis at 78215bd (v3.1.8, remotes upstream=Teddy563, louis-e)
+                   and Farsinuce/meld at 5c1353e (v1.9.8). meld\arnis.exe is the pinned release
+                   binary, placed by hand (sha256 in STATE.md); keep data\meld-data\bin\ empty
+  tools\           meld_api.py, meld_pilot.py (the pilot recipe), meld_wait.py, world_check.py, world_diff.py, mcserver_check.py
+  data\            gitignored: meld-data\ (MELD_DATA_DIR), meld-cache\ (MELD_CACHE_DIR), venv-meld\, downloads\, server-pilot\, server-build9\
 ```
 
 Start every session at the workspace root: a parent CLAUDE.md loads from a subdirectory, but a
@@ -88,11 +89,18 @@ session started inside `arnis\` keys its auto-memory on that clone. Never `@`-im
 imports expand at every launch and the three files are over 100 KB. Per-fork rules can go in
 `.claude\rules\` with a `paths:` header, loaded only when a matching file is read.
 
-**Commands** [PLACEHOLDER until the forks exist and the pilot has run, PRIMER §5 item 1]: none
-yet. Only lines pasted from a run that worked, with the date, go here. Machine facts: `STATE.md`.
+**Commands** (each pasted from a run that worked on 2–3 Sep 2026; PowerShell, from the root):
 
-**Precious** (REFERENCE §18's three gitignored files; everything else is regenerable, §13). Copy
-`.env` only after this repo's `.gitignore` lists it. The build-9 world is also in the old repo's
+```
+$env:MELD_DATA_DIR="D:\ai\NordGrund\data\meld-data"; $env:MELD_CACHE_DIR="D:\ai\NordGrund\data\meld-cache"; $env:PYTHONUTF8="1"
+data\venv-meld\Scripts\python.exe meld\meld_app.py --no-tray --no-open --no-statusbar   # headless :5630; API token in data\meld-data\session.json (tools\meld_api.py)
+data\venv-meld\Scripts\python.exe tools\meld_pilot.py --dry-run                        # or without, to generate; then tools\world_check.py <world>
+data\venv-meld\Scripts\python.exe tools\mcserver_check.py data\server-pilot            # boots, scans, stops
+cd data\server-pilot; & "C:\Program Files\Java\jdk-25.0.4\bin\java.exe" -Xmx3G -Xms1G -Dfile.encoding=UTF-8 -jar server.jar nogui
+```
+
+**Precious** (REFERENCE §18's three gitignored files; everything else is regenerable, §13). `.gitignore`
+lists `.env`; it is not copied yet. The build-9 world is also in the old repo's
 tracked `archive.7z` (commit 4c8fae2), identical to `testserver\denmark-test` on 1 Sep 2026; walk a
 copy, never that one, because loading dirties chunks.
 
@@ -113,8 +121,9 @@ browser (decisions.md B). Not in §3:
 | bbox per run | Meld cells, never a country box | may be capped at 16384² and upsample | §9.2 |
 | master origin | one per country, set once; the pilot's own is fine (decisions.md C) | the cross-run guard checks only scale and origin | §9.4, §10.5 |
 
-Read back before walking, beyond PRIMER §3's own checks: `level.dat` carries the target's
-DataVersion (4903 for 26.2); the ground is not flat; the 1 km pilot spans 1,000 blocks; buildings
+Read back before walking, beyond PRIMER §3's own checks (`tools\world_check.py` does them): every
+chunk carries the target's DataVersion (4903 for 26.2; the fork stamps `level.dat` 4189 until the
+first server load, STATE.md); the ground is not flat; the 1 km pilot spans 1,000 blocks; buildings
 exist and the logged command line has no `--no-buildings`; at least one chunk has a biome palette
 with more than one entry (CONSULT §4: biome failure is invisible at both ends). Never run
 `--forceUpgrade` or "Optimize World" (REFERENCE §12).
@@ -124,6 +133,7 @@ Expect, do not fix, in the pilot:
 - Woodland may come out taiga, or a whole cell one biome (REFERENCE §9.1, CONSULT §4).
 - X/Z are origin-relative, not grid coordinates (§9.4; open, PRIMER §6).
 - Roughly a third of build 9's buildings: OSM is the only footprint source for now (CONSULT §7).
+- Region-file hashes differ between identical runs (palette order); compare with `tools\world_diff.py`.
 
 ## How this file may grow or be revised
 

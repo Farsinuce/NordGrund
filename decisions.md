@@ -34,8 +34,11 @@ settled. Close items in place with one line; never renumber. File name and forma
 
 ## Awaiting the user
 
-- A. GitHub account, repo names and visibility (PRIMER §5 item 1). A GitHub fork of a public repo
-  is always public. So the choice is (1) public forks of Teddy563's repos, or (2) private made. [USER SAYS] Let's just do a public fork if that's the most efficient for us to do.
+- A. Closed 2 Sep 2026 [USER 2 Sep 2026]: *"we just fork it and our repo will be public."* Done the same
+  day under the `Farsinuce` account: public forks `Farsinuce/arnis` (of Teddy563/arnis, pinned
+  `78215bd` = v3.1.8) and `Farsinuce/meld` (of Teddy563/meld, pinned `5c1353e` = v1.9.8), and the
+  public enrichment repo `Farsinuce/NordGrund` (this workspace, docs included). The `louis-e`
+  remote is on the Arnis clone.
 - B. Closed in place 1 Sep 2026 [PROPOSED]: Claude drives Meld through `project.json` and its
   local JSON API (REFERENCE §10.5); the user's step is the walk. Say so if you want it otherwise.
 - C. In-game coordinates: origin-relative for the pilot [PROPOSED (a)]; a real projection is
@@ -62,3 +65,15 @@ settled. Close items in place with one line; never renumber. File name and forma
   adgangsadresse CSV in the first session; under the 10 GB rule it needs no call.]
 - H. `manifest.json`: REFERENCE §17 says copy it, §18 says copy only the three gitignored files.
   Consult it in place until told otherwise [PROPOSED].
+- I. [PROPOSED 2 Sep 2026] Height profile, used by the pilot: vanilla −64..319, `ground_level` 62,
+  elevation lock pinned by hand at 0–180 m, so in-game Y = 62 + metres (sea at Y 62, Møllehøj at
+  Y 233) and 126 blocks stay below sea level for survival mining. Meld's default (−56, survey lock)
+  leaves 8. Ratify or change before the first production cell (first merge wins, REFERENCE §10.5).
+- J. [PROPOSED 2 Sep 2026] Settings base for the pilot: Meld's shipped `presets/default.json` (the
+  maintainer's tuned 1:1 look: interiors on, all schematic props off, tree sizes big 70 / tall 50)
+  with PRIMER §3 on top. Raw Meld project defaults differ (interiors off, every prop on). Say if
+  you want the raw defaults or props for the next run. The full table is `tools/meld_pilot.py`.
+- K. [PROPOSED 2 Sep 2026] The determinism gate is block-level identity (`tools/world_diff.py`),
+  not region-file hashes: the fork writes chunk palettes in varying order, so identical worlds hash
+  differently (research/pilot-run-2026-09-02.md). PRIMER §3 ("diff region-file hashes") and §4
+  ("hash identically") are yours to amend by hand.

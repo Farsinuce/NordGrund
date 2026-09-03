@@ -31,6 +31,9 @@ settled. Close items in place with one line; never renumber. File name and forma
    - The Danmarks Kirker plans: *"we assume it's okay for our hobby project"* (CONSULT §10).
 6. [USER 1 Sep 2026] Spelling: *"our new NordGrund workspace"*, and the folder and workspace file
    are `NordGrund`. PRIMER line 8 (30 Aug) says `Nordgrund`; fix it to match [PROPOSED].
+7. [USER 3 Sep 2026] The PRIMER §4 acceptance walk, after work item 1: *"the arnis/meld
+   server-pilot looks MUCH better than our server-build9."* The pivot stands on a walk, not a
+   document. Same message: go on to work items 3 and 4 plus the REFERENCE §16 wish list (item 4).
 
 ## Awaiting the user
 
@@ -79,3 +82,16 @@ settled. Close items in place with one line; never renumber. File name and forma
   not region-file hashes: the fork writes chunk palettes in varying order, so identical worlds hash
   differently (research/pilot-run-2026-09-02.md). PRIMER §3 ("diff region-file hashes") and §4
   ("hash identically") are yours to amend by hand.
+- L. [PROPOSED 3 Sep 2026] Work-item-4 emitter calls, all in `tools/emit_geodk.py`: BBR use code →
+  `building=*` through a closed table; wall height = GeoDanmark roof-edge Z above the DHM
+  (eave), storeys from BBR; unkeyed footprints stay `yes`/`shed`; OSM buildings inside the
+  coverage are replaced wholesale; an OSM building name inside a footprint is kept as `name`.
+  Say if you want OSM buildings kept where GeoDanmark has none, or a −0.5 m wall inset.
+- M. [PROPOSED 3 Sep 2026] Your §16 list as built (research/nordgrund-features-2026-09-03.md):
+  dark-oak doors at DAR entrances; a wall torch inside above each door; a pale-oak wall sign
+  outside above the door with street + number; on non-residential buildings a pale-oak HANGING
+  sign with the business name replaces the address sign (nearest named OSM shop/amenity within
+  the footprint or 12 m; CVR later); hanging lanterns under EVERY ceiling on a 10-block grid
+  (you wrote ground floor; glowstone upstairs is loot, so all floors, sparse); manholes =
+  waxed weathered copper grate flush with the surface over a full water cauldron. Each is a
+  separate `--nordgrund` feature you can turn off; the block choices are yours to change.

@@ -77,11 +77,11 @@ Regenerated from the real tree on 3 Sep 2026. The root is the public repo `Farsi
 
 ```
 d:\ai\NordGrund\   this file, decisions.md, STATE.md, the PIVOT files, tools\, research\
-  arnis\  meld\    our forks: Farsinuce/arnis at 78215bd (v3.1.8, remotes upstream=Teddy563, louis-e)
-                   and Farsinuce/meld at 5c1353e (v1.9.8). meld\arnis.exe is the pinned release
-                   binary, placed by hand (sha256 in STATE.md); keep data\meld-data\bin\ empty
-  tools\           meld_api.py, meld_pilot.py (the pilot recipe), meld_wait.py, world_check.py, world_diff.py, mcserver_check.py
-  data\            gitignored: meld-data\ (MELD_DATA_DIR), meld-cache\ (MELD_CACHE_DIR), venv-meld\, downloads\, server-pilot\, server-build9\
+  arnis\  meld\    our forks, branch `nordgrund` in both (base 78215bd = v3.1.8 and 5c1353e = v1.9.8;
+                   remotes upstream=Teddy563, louis-e on arnis). meld\arnis.exe is OUR release build
+                   of that branch (sha256 in STATE.md); keep data\meld-data\bin\ empty
+  tools\           meld_pilot.py (recipe), emit_geodk.py (work item 4), dar_chain.py, datafordeler.py, world_check/diff, probe_features, mcserver_check
+  data\            gitignored: meld-data\, meld-cache\ (osm\ = enriched tiles, osm-original\), raster\ (DHM), vector\, derived\, server-*\
 ```
 
 Start every session at the workspace root: a parent CLAUDE.md loads from a subdirectory, but a
@@ -94,7 +94,7 @@ imports expand at every launch and the three files are over 100 KB. Per-fork rul
 ```
 $env:MELD_DATA_DIR="D:\ai\NordGrund\data\meld-data"; $env:MELD_CACHE_DIR="D:\ai\NordGrund\data\meld-cache"; $env:PYTHONUTF8="1"
 data\venv-meld\Scripts\python.exe meld\meld_app.py --no-tray --no-open --no-statusbar   # headless :5630; API token in data\meld-data\session.json (tools\meld_api.py)
-data\venv-meld\Scripts\python.exe tools\meld_pilot.py --dry-run                        # or without, to generate; then tools\world_check.py <world>
+data\venv-meld\Scripts\python.exe tools\meld_pilot.py --name aarhus-nordgrund --nordgrund all [--regenerate]   # then tools\probe_features.py <world>
 data\venv-meld\Scripts\python.exe tools\mcserver_check.py data\server-pilot            # boots, scans, stops
 cd data\server-pilot; & "C:\Program Files\Java\jdk-25.0.4\bin\java.exe" -Xmx3G -Xms1G -Dfile.encoding=UTF-8 -jar server.jar nogui
 ```
@@ -121,7 +121,7 @@ browser (decisions.md B). Not in §3:
 | bbox per run | Meld cells, never a country box | may be capped at 16384² and upsample | §9.2 |
 | master origin | one per country, set once; the pilot's own is fine (decisions.md C) | the cross-run guard checks only scale and origin | §9.4, §10.5 |
 
-Read back before walking, beyond PRIMER §3's own checks (`tools\world_check.py` does them): every
+Read back before walking, beyond PRIMER §3's own checks (`tools\world_check.py`, `probe_features.py`): every
 chunk carries the target's DataVersion (4903 for 26.2; the fork stamps `level.dat` 4189 until the
 first server load, STATE.md); the ground is not flat; the 1 km pilot spans 1,000 blocks; buildings
 exist and the logged command line has no `--no-buildings`; at least one chunk has a biome palette

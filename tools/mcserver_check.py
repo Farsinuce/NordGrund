@@ -35,7 +35,7 @@ def level_name(serverdir: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("serverdir"); ap.add_argument("--timeout", type=int, default=300)
-    ap.add_argument("--cmd", action="append", default=[]); ap.add_argument("--keep", action="store_true", help="leave the server running")
+    ap.add_argument("--cmd", action="append", default=[]); ap.add_argument("--keep", action="store_true", help="leave the server running"); ap.add_argument("--settle", type=float, default=8, help="seconds to wait after the commands before stopping")
     a = ap.parse_args(); sd = os.path.abspath(a.serverdir); world = os.path.join(sd, level_name(sd))
     before = region_hashes(world); print(f"world {world}: {len(before)} region files hashed before load")
     p = subprocess.Popen([JAVA, *JVM, "-jar", "server.jar", "nogui"], cwd=sd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
@@ -57,12 +57,12 @@ def main() -> int:
                 done = True; print(f"server up after {time.time()-t0:.0f}s")
                 for c in cmds: p.stdin.write(c + "\n")
                 p.stdin.flush(); sent = True; t_done = time.time()
-        if done and sent and stopped_at is None and time.time() - t_done > 8 and not a.keep:
+        if done and sent and stopped_at is None and time.time() - t_done > a.settle and not a.keep:
             p.stdin.write("save-all flush\nstop\n"); p.stdin.flush(); stopped_at = time.time()
         if time.time() - t0 > a.timeout:
             print("TIMEOUT"); p.kill(); break
         if p.poll() is not None and q.empty(): break
-        if a.keep and done and sent and time.time() - t_done > 8:
+        if a.keep and done and sent and time.time() - t_done > a.settle:
             print("server left running (--keep); pid", p.pid); return 0
     p.wait(timeout=60)
     bad = [l for l in log if any(b in l for b in BAD)]

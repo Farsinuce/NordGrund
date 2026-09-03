@@ -45,7 +45,10 @@ LOCK = {"min_m": 0, "max_m": 180, "seed": SEED}    # Denmark-wide: Møllehøj 17
 
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--name", default="aarhus-pilot"); ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--nordgrund", default="none", help="our fork's --nordgrund value: none | all | doors,torches,signs,lanterns,manholes")
+    ap.add_argument("--regenerate", action="store_true", help="re-run every planned cell, merged ones included (a new binary or new tiles)")
     a = ap.parse_args(); m = Meld()
+    SETTINGS["nordgrund"] = a.nordgrund
     projects = m.get("/api/projects")
     slugs = {p["slug"]: p for p in projects["projects"]}
     if a.name in slugs:
@@ -66,7 +69,11 @@ def main() -> int:
     g = m.post("/api/grid", {"bbox": PILOT, "mode": "replace"}); print("cells:", g["count"], [c["cell_key"] for c in g["cells"]])
     st = m.get("/api/state"); print("state:", st["origin"], st["elevation"], st["grid"])
     if a.dry_run: return 0
-    print("queue:", dump(m.post("/api/queue", {})))
+    if a.regenerate:
+        keys = list(st["grid"].keys())
+        print("regenerate:", dump(m.post("/api/cell/regenerate-cells", {"cell_keys": keys})))
+    else:
+        print("queue:", dump(m.post("/api/queue", {})))
     t0 = time.time(); idle = 0
     while True:
         time.sleep(15); s = m.get("/api/status"); run = s["run"]; busy = [w for w in s["workers"] if w.get("running")]

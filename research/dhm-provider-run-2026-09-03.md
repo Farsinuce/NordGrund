@@ -56,6 +56,13 @@ signs, 1,287 hanging signs, 45,174 lanterns, 12,198 copper grates, 12,412 water 
 glowstone. 11,635 sign and 1,073 hanging-sign block entities, none malformed. Bytes per chunk
 4,365 (world #3: 4,357).
 
+## Determinism across the new sampling path 🟢
+
+Cell `0,0,4` regenerated (40 s) and compared block by block against its first render:
+**16,384 of 16,384 chunks identical** (1,365 differ in palette order only, as always). So sampling
+by absolute block coordinate through the local GeoTIFFs is reproducible, which is the property the
+whole anchored-fetch design exists for.
+
 ## What this does NOT yet show 🔴
 
 - **Harbour depth.** The manual lock still starts at 0 m, so every sea-floor sample below zero
@@ -63,9 +70,3 @@ glowstone. 11,635 sign and 1,073 hanging-sign block entities, none malformed. By
   provider (decisions.md O proposes lock −20…175 m with `ground_level` 42).
 - **A walk.** Every number here is read from the region files. Whether the kept relief reads as
   better or merely noisier is the user's judgement, at `data\server-dhm`, port 25569.
-## Determinism across the new sampling path 🟢
-
-Cell `0,0,4` regenerated (40 s) and compared block by block against its first render:
-**16,384 of 16,384 chunks identical** (1,365 differ in palette order only, as always). So sampling
-by absolute block coordinate through the local GeoTIFFs is reproducible, which is the property the
-whole anchored-fetch design exists for.

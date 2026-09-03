@@ -95,3 +95,13 @@ settled. Close items in place with one line; never renumber. File name and forma
   (you wrote ground floor; glowstone upstairs is loot, so all floors, sparse); manholes =
   waxed weathered copper grate flush with the surface over a full water cauldron. Each is a
   separate `--nordgrund` feature you can turn off; the block choices are yours to change.
+- N. [PROPOSED 3 Sep 2026] Work item 3 as built (research/session-2026-09-03-handover.md §5):
+  `--dhm-dir` reads the local DHM Terræn squares and `--elevation-trust v1` skips the repair
+  stages meant for coarse DEMs (the 6 m anomaly median, the 30 m built-up Gaussian, the 25 m
+  coastal pull) and levels water raise-only. Both default off. Not yet run on a world.
+- O. [PROPOSED 3 Sep 2026, amends I] The harbour-depth question. With the manual lock at 0–180 m
+  every sea-floor sample below 0 m clamps to sea level, so the DHM's real basins (−14.8 m in the
+  pilot area) never appear. To keep Y = 62 + metres AND real depths: lock −20…175 m with
+  `ground_level` 42. Cost: 106 blocks below sea level for mining instead of 126. First merge wins
+  the height profile (REFERENCE §10.5), so this is a call to take before the first production
+  cell. Which do you want: flat sea floors, or 20 m of real depth?

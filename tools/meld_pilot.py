@@ -47,8 +47,14 @@ def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--name", default="aarhus-pilot"); ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--nordgrund", default="none", help="our fork's --nordgrund value: none | all | doors,torches,signs,lanterns,manholes")
     ap.add_argument("--regenerate", action="store_true", help="re-run every planned cell, merged ones included (a new binary or new tiles)")
+    ap.add_argument("--dhm", default="", help="directory of local DHM_TERRAEN_1km_*.tif squares (work item 3); implies --regional-elevation-only, without which a missing square silently becomes AWS terrain")
+    ap.add_argument("--elevation-trust", default="off", choices=["off", "v1"], help="skip the repair stages written for coarse DEMs")
     a = ap.parse_args(); m = Meld()
     SETTINGS["nordgrund"] = a.nordgrund
+    SETTINGS["dhm_dir"] = os.path.abspath(a.dhm) if a.dhm else ""
+    SETTINGS["elevation_trust"] = a.elevation_trust
+    # Fail-closed pairing: the fork falls back to AWS on a provider error unless this is set.
+    SETTINGS["regional_elevation_only"] = bool(a.dhm)
     projects = m.get("/api/projects")
     slugs = {p["slug"]: p for p in projects["projects"]}
     if a.name in slugs:

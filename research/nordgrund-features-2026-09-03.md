@@ -50,6 +50,18 @@ byte-identical (5/5, same hashes as `78215bd`).
   and logs `Skipping block entity with invalid type` for each (30,149 per pilot world, also in
   world #1). Gated off for DataVersion ≥ 4903 on the branch.
 
+## Adversarial review of the branch (3 reviewers, 2 skeptics per finding, 3 Sep 2026)
+
+Confirmed and fixed in commit after d67beaf: (1) block ids 270–275 were already the fork's
+calcite/amethyst/basalt/obsidian ids, my `name()` arms shadowed them in the DEFAULT path (the
+golden fixtures never place those blocks, so the gate could not see it): moved to the first free
+ids; (2) a wall hanging sign is a pub sign attached at its side, so its `facing` runs along the
+wall; (3) the single-floor lantern hung one block too low with air above it; (4) a closed ring's
+repeated first node produced two doors at corners; (5) entrance cells inside a building passage
+got a door across the road; (6) floors with no 10-grid point got no lantern (fallback: the
+floor's first cell); (7) torch/sign now require a wall block above the door. Refuted: the bbox
+clipper erasing node tags (buildings never reach it in tile-invariant mode).
+
 ## Open until walked
 
 - Whether the ground pass (which runs last) preserves the grate at surface level.

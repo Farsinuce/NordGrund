@@ -145,6 +145,16 @@ Design points a reviewer should check:
    for the fail-closed path to hold. That pairing is not yet in `tools/meld_pilot.py`.
 5. **Preflight.** `--prewarm-elevation` now surveys the squares and fails listing the missing ones,
    so Meld's terrain bake is the preflight for a frozen build.
+6. **`dhm_sea.txt`.** The pilot needs 25 squares and Denmark publishes only 24: `6221_576` is open
+   water in Aarhus Bay and `GetRasterFile` 404s for it (verified 3 Sep 2026). Such squares are
+   declared in `data/raster/dhm_sea.txt` and read as 0.000 m, which is what the DTM burns the sea
+   to anyway. ⚠️ A 404 means "no Danish terrain published here": open sea around the coast, but
+   FOREIGN LAND at the German border and in the Sound. A national run needs that distinction — a
+   border square wants a neighbour's DEM, not a zero.
+
+Independently verified while building it: the five projection test vectors match pyproj 3.7.2 to
+under a millimetre (re-run directly, not taken from the design brief), and the block-centre pixel
+maths matches rasterio's own sampler at three pilot coordinates.
 
 Status: compiles, clippy clean, 7 provider unit tests pass, full suite passes, golden gate 5/5
 unchanged. **Not yet run on a world.** The next session should generate world #4 with

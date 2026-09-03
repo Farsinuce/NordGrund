@@ -1,0 +1,16 @@
+# MASTER COPY (the working copy lives beside the tiles as <dhm-dir>/dhm_sea.txt, which is
+# gitignored with the rest of data/). Hand-verified, not regenerable: keep it in git.
+#
+# Squares the DHM does not publish because they are open sea, one "<northing-km> <easting-km>"
+# per line. The provider reads every sample in such a square as 0.000 m, which is what the DTM
+# itself burns the sea to (CONSULT §9: the zero burn is the sea/land authority), rather than
+# failing the cell.
+#
+# How a square gets here: GetRasterFile returns 404 for it. ⚠️ A 404 means "no Danish terrain
+# published here", which is open sea around the coast but FOREIGN LAND at the German border and
+# in the Sound. Verify a square is actually sea before adding it; a border square needs a
+# neighbour country's DEM, not a zero.
+#
+# 6221_576: Aarhus Bay, ~2 km off Marselisborg. 404 verified 3 Sep 2026; the four pilot cells
+# need it because cell 0,-1,4's seam-expanded bbox reaches into the bay.
+6221 576

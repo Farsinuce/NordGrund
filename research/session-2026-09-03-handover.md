@@ -14,7 +14,7 @@ Opus 5 after the Fable limit was reached. Judge it accordingly.
 | Work item 1: stand up Meld + the fork unmodified, generate the Aarhus pilot | **done, walked, accepted** — [USER 3 Sep 2026] *"the arnis/meld server-pilot looks MUCH better than our server-build9"* (decisions.md 7) | `data\server-pilot`, port 25565 |
 | Work item 4: enrichment emitter v1 (GeoDanmark footprints + BBR attributes) | **done, generated, not yet walked** | `data\server-geodk`, port 25567 |
 | REFERENCE §16 wish list (doors, torches, address signs, name boards, lanterns, manholes) | **done, generated, reviewed, fixed, not yet walked** | `data\server-nordgrund`, port 25568 |
-| Work item 3: national elevation provider + the repair-stage gate | **code done, unit-tested, NOT yet run on a world** 🔴 | — |
+| Work item 3: national elevation provider + the repair-stage gate | **done, generated, not yet walked** (`research/dhm-provider-run-2026-09-03.md`) | `data\server-dhm`, port 25569 |
 | baseline for comparison | build 9, untouched copy | `data\server-build9`, port 25566 |
 
 Launch any of them (all creative, flight on, offline mode, `generate-structures=false`):
@@ -166,6 +166,26 @@ against world #3, which is where the gate should show.
 (down to −14.8 m in the pilot area) never appear. Its proposal is `--elevation-min -20
 --elevation-max 175` with `ground_level 42`, keeping Y = 62 + metres. **First merge wins the height
 profile**, so this is a decision to take before the first production cell, not after.
+
+## 5a. How to reproduce any of it
+
+```
+$env:MELD_DATA_DIR="D:\ai\NordGrund\data\meld-data"; $env:MELD_CACHE_DIR="D:\ai\NordGrund\data\meld-cache"; $env:PYTHONUTF8="1"
+data\venv-meld\Scripts\python.exe meld\meld_app.py --no-tray --no-open --no-statusbar   # headless :5630
+data\venv-meld\Scripts\python.exe tools\meld_pilot.py --name aarhus-pilot                       # world #1
+data\venv-meld\Scripts\python.exe tools\emit_geodk.py --bbox 572199 6221123 576552 6225474 --manholes --write
+data\venv-meld\Scripts\python.exe tools\meld_pilot.py --name aarhus-geodk                       # world #2
+data\venv-meld\Scripts\python.exe tools\meld_pilot.py --name aarhus-nordgrund --nordgrund all   # world #3
+data\venv-meld\Scripts\python.exe tools\meld_pilot.py --name aarhus-dhm --nordgrund all --dhm data\raster --elevation-trust v1   # world #4
+```
+
+Add `--regenerate` to re-run merged cells after a new binary or new tiles. Check a world with
+`tools\world_check.py <world>`, its features with `tools\probe_features.py <world>`, two runs
+against each other with `tools\world_diff.py <regionA> <regionB>`, and a copy on a real server
+with `tools\mcserver_check.py <serverdir>`. Rebuild the fork with
+`cargo build --release --bin arnis` in `arnis\` (Rust is at `%USERPROFILE%\.cargo\bin`, not on the
+Bash tool's PATH), gate it with `bash scripts/golden_hash.sh`, then copy
+`arnis\target\release\arnis.exe` over `meld\arnis.exe` **with Meld stopped**.
 
 ## 6. Tools written this session (all in `tools/`, all run from the repo root)
 

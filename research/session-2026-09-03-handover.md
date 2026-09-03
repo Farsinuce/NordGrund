@@ -75,8 +75,8 @@ REFERENCE §11.2's open question for 26.2.
 
 ### Determinism
 
-Regenerating one cell twice gave **block-identical** output (16,384/16,384 chunks) while the
-region files' sha256 differed: the fork writes chunk palettes in varying order. The gate is
+Regenerating one cell twice gave **block-identical** output (16,384/16,384 chunks) in world #1 and
+again in world #4 on the DHM sampling path, while the region files' sha256 differed: the fork writes chunk palettes in varying order. The gate is
 `tools/world_diff.py` (decodes and compares blocks, biomes, block entities, heightmaps), not file
 hashes. PRIMER §3 and §4 still say "hash identically" and are yours to amend (decisions K).
 

@@ -63,6 +63,9 @@ glowstone. 11,635 sign and 1,073 hanging-sign block entities, none malformed. By
   provider (decisions.md O proposes lock −20…175 m with `ground_level` 42).
 - **A walk.** Every number here is read from the region files. Whether the kept relief reads as
   better or merely noisier is the user's judgement, at `data\server-dhm`, port 25569.
-- **A seam test across the new sampling path.** The provider samples by absolute block coordinate,
-  so two cells sharing a block are identical by construction, but that has not been re-measured
-  with `tools/world_diff.py` on a regenerated cell the way world #1 was.
+## Determinism across the new sampling path 🟢
+
+Cell `0,0,4` regenerated (40 s) and compared block by block against its first render:
+**16,384 of 16,384 chunks identical** (1,365 differ in palette order only, as always). So sampling
+by absolute block coordinate through the local GeoTIFFs is reproducible, which is the property the
+whole anchored-fetch design exists for.
